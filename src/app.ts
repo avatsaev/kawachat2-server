@@ -46,6 +46,17 @@ io.on('connection', (client) =>{
 
   });
 
+
+  client.on("leave", function(data: {frq: string}){
+
+    console.log('leave', data);
+
+    client.leave(data.frq);
+
+  });
+
+
+
   client.on("send", function(data){
 
     console.log(data)
