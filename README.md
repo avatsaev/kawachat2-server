@@ -1,6 +1,6 @@
 # KawaChat 2 Server
 
-Client available here:
+Client available here: https://github.com/avatsaev/kawachat2-client
 
 ## Install
 
