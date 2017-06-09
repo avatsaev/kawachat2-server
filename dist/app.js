@@ -31,11 +31,8 @@ io.on('connection', (client) => {
         client.emit('host', os.hostname());
     });
     client.on("leave", function (data) {
-        console.log(data);
-        console.log(`user ${data.username} leaving frequency ${data.frq}`);
+        console.log('leave', data);
         client.leave(data.frq);
-        client.emit('update', (data.username + " has left the server on the frequency " + data.frq));
-        client.emit('host', os.hostname());
     });
     client.on("send", function (data) {
         console.log(data);
