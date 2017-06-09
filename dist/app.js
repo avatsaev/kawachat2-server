@@ -41,7 +41,6 @@ io.on('connection', (client) => {
         //sanitize data
         data["frq"] = escape_html(data["frq"]).substring(0, 32);
         data["msg"] = escape_html(data["msg"]).substring(0, 512);
-        // data["usr"]= escape_html(data["usr"]).substring(0, 64);
         client.to(data.frq).emit('chat', data);
     });
 });

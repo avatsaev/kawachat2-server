@@ -50,7 +50,6 @@ io.on('connection', (client) =>{
   client.on("leave", function(data: {frq: string}){
 
     console.log('leave', data);
-
     client.leave(data.frq);
 
   });
@@ -58,14 +57,13 @@ io.on('connection', (client) =>{
 
   client.on("send", function(data){
 
-    console.log(data)
+    console.log(data);
 
     if(!data["msg"] || data["msg"]==="" || !data["frq"] || data["frq"]==="") return;
 
     //sanitize data
     data["frq"]= escape_html(data["frq"]).substring(0, 32);
     data["msg"]= escape_html(data["msg"]).substring(0, 512);
-    // data["usr"]= escape_html(data["usr"]).substring(0, 64);
 
     client.to(data.frq).emit('chat', data);
 
