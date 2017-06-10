@@ -7,6 +7,11 @@ const env = process.env.NODE_ENV || "development";
 const app = express();
 app.set('port', port);
 app.set('env', env);
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 const router = express.Router(); // get an instance of the express Router
 router.get('/', (req, res) => {
     res.json({ health: 'OK' });
@@ -16,10 +21,7 @@ router.get('/stats', (req, res) => {
 });
 router.get('/room/:frq/stats', (req, res) => {
     if (io.sockets.adapter.rooms[req.params.frq]) {
-        res.json({
-            frq: req.params.frq,
-            clientsCount: io.sockets.adapter.rooms[req.params.frq].length
-        });
+        res.json(getFrqStats(req.params.frq));
     }
     else {
         res.status(404);
@@ -45,6 +47,7 @@ io.on('connection', (client) => {
     client.on("leave", (data) => {
         console.log('leave', data);
         client.leave(data.frq);
+        client.disconnect(true);
         client.to(data.frq).emit('frqUpdate', getFrqStats(data.frq));
         io.emit('statsUpdate', getServerStats());
     });
@@ -65,13 +68,14 @@ io.on('connection', (client) => {
                 clientsCount: Object.keys(io.sockets.adapter.rooms[frq].sockets).length
             });
         });
+        io.emit('statsUpdate', getServerStats());
     });
     client.emit('host', os.hostname());
 });
 function getServerStats() {
     return {
-        clientsCount: io.engine.clientsCount,
-        roomsCount: Object.keys(io.sockets.adapter.rooms).length - (io.engine.clientsCount)
+        clientsCount: io.engine.clientsCount - 1,
+        roomsCount: Object.keys(io.sockets.adapter.rooms).length - io.engine.clientsCount
     };
 }
 function getFrqStats(frq) {
