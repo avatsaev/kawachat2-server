@@ -13,7 +13,7 @@ app.set('env', env);
 const server = app.listen(app.get('port'), () => {
     console.log('Kawachat server listening on port ' + app.get('port'));
 });
-const io = socketio(server);
+const io = socketio(server, { 'origins': '*:*' });
 io.adapter(redis({
     host: redis_host,
     port: redis_port
