@@ -1,6 +1,4 @@
 
-
-import * as redis from 'socket.io-redis';
 import * as socketio from 'socket.io';
 import * as express from 'express';
 import * as os from 'os';
@@ -8,8 +6,6 @@ import * as os from 'os';
 
 const port = process.env.PORT || 3003;
 const env = process.env.NODE_ENV || "development";
-const redis_host = process.env.REDIS_HOST || "localhost";
-const redis_port = process.env.REDIS_PORT || 6379;
 
 const app = express();
 
@@ -22,10 +18,6 @@ const server = app.listen(app.get('port'), () => {
 
 const io = socketio(server, {'origins': '*:*'} );
 
-io.adapter(redis({
-  host: redis_host,
-  port: redis_port
-}));
 
 const escape_html = function(text = ""): string {
   return text.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");

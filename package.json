@@ -14,8 +14,7 @@
     "express": "^4.15.3",
     "http": "^0.0.0",
     "os": "^0.1.1",
-    "socket.io": "^2.0.2",
-    "socket.io-redis": "^5.1.0"
+    "socket.io": "^2.0.2"
   },
   "devDependencies": {
     "@types/socket.io": "^1.4.29",
