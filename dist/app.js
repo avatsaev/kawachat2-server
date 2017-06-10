@@ -7,6 +7,17 @@ const env = process.env.NODE_ENV || "development";
 const app = express();
 app.set('port', port);
 app.set('env', env);
+const router = express.Router(); // get an instance of the express Router
+router.get('/', (req, res) => {
+    res.json({ health: 'OK' });
+});
+router.get('/stats', (req, res) => {
+    res.json({
+        clientsCount: io.engine.clientsCount,
+        roomsCount: Object.keys(io.sockets.adapter.rooms).length,
+    });
+});
+app.use('/', router);
 const server = app.listen(app.get('port'), () => {
     console.log('Kawachat server listening on port ' + app.get('port'));
 });
