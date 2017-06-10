@@ -19,7 +19,9 @@ Server is written in TypeScript 2, so you'll need to transpile it:
 
 ## Run
 
-The server synchronises socket sessions throught a redis server for eventual horizontal scaling, so you'll need to run one locally or in a docker container.
+The server synchronises socket sessions throught a redis server for eventual horizontal scaling, so you'll need to run one locally or in a docker container. 
+
+If you don't need scaling, use `no-redis` branch.
 
 If you don't need scaling, use `no-redis` branch.
 
