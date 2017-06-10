@@ -21,6 +21,8 @@ Server is written in TypeScript 2, so you'll need to transpile it:
 
 The server synchronises socket sessions throught a redis server for eventual horizontal scaling, so you'll need to run one locally or in a docker container.
 
+If you don't need scaling, use `no-redis` branch.
+
 `$ docker pull redis:3.2-alpine`
 
 `$ docker run -d -p 6379:6379 redis:3.2-alpine`
